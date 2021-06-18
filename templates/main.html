@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.3/cerulean/bootstrap.min.css"
+    integrity="sha512-dQLT/B7byn2LjN/DN4zeBKpwGV6qbidV0XiMRWQOL7TGrV7FkZFldkGG+DGMU+CQnMTcRZlUI7GMWt1j6akNew=="
+    crossorigin="anonymous" />
+  <title>KLC REVIEWS </title>
+ 
+</head>
+<body background-color="red">
+{% if confirm %}
+    <div class="alert alert-primary" role="alert">
+        Your profile has been updated
+    </div>
+{% endif %}
+
+<div class="text-center">
+    <img src="{{profile.avatar.url}}" alt="my-profile" class="rounded-circle" width="200px" height="200px"><br>
+    <b> {{profile.user}}</b>
+    
+</div>
+
+<br>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    
+
+    <button type="submit" class="btn btn-primary mt-3">update</button>
+</form>
+
+
+
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+
+</body>
+

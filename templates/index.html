@@ -1,0 +1,361 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.3/cerulean/bootstrap.min.css"
+    integrity="sha512-dQLT/B7byn2LjN/DN4zeBKpwGV6qbidV0XiMRWQOL7TGrV7FkZFldkGG+DGMU+CQnMTcRZlUI7GMWt1j6akNew=="
+    crossorigin="anonymous" />
+  <title>KLC REVIEWS </title>
+  <style>
+  
+  p {font-size: 16px;}
+  .margin {margin-bottom: 45px;}
+  .bg-1 { 
+    background-color:green; /* Green */
+    color: #ffffff;
+  }
+  .bg-2 { 
+    background-color: #474e5d; /* Dark Blue */
+    color: #ffffff;
+  }
+  .bg-3 { 
+    background-color: #ffffff; /* White */
+    color: #555555;
+  }
+  .bg-4 { 
+    background-color: #2f2f2f; /* Black Gray */
+    color: #fff;
+  }
+  .container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+  
+  </style>
+  <style>
+  body{
+    background: #edf1f5;
+    margin-top:20px;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid transparent;
+    border-radius: 0;
+    margin-top:20px;
+}
+.text-muted {
+    color: #8898aa!important;
+}
+.card .card-subtitle {
+    font-weight: 300;
+    margin-bottom: 10px;
+    color: #8898aa;
+}
+ul.list-style-none li {
+    list-style: none;
+}
+.progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #707cd2;
+    transition: width .6s ease;
+}
+.progress {
+    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+    -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+    -o-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+}
+
+.progress {
+    display: flex;
+    height: 4px;
+    overflow: hidden;
+    font-size: .65625rem;
+    background-color: rgba(120,130,140,.13);
+    border-radius: 0;
+    box-shadow: inset 0 0.1rem 0.1rem rgba(0,0,0,.1);
+}
+.display-5 {
+    font-size: 50px !important;
+    font-weight: bold;
+    line-height: 1.2;
+}</style>
+</head>
+
+<body> 
+
+<div>
+  <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+    <div class="container">
+    
+      <a href="../" class="navbar-brand">KLC REVIEWS <span style="color: rgb(39, 117, 161);"> <strong> -PUT YOUR REVIEWS ON US
+            </strong>
+        </span> </a>
+           {% if request.user.is_authenticated %}
+         <img src="{{profile.avatar.url}}"  class="rounded-circle" width="40px" height="40px" ><p style="color:white;"> <b>Welcome {{profile.user}}</b></p>
+        <a href="{% url 'my' %}" class="navbar-tech"><button class="btn btn-primary">update profile</button></a><br>
+  
+         <a href="{% url 'logout' %}" class="navbar-tech"><button class="btn btn-danger">logout</button></a>
+        {% else %}
+        <a href="{% url 'login' %}" class="navbar-tech"><button class="btn btn-danger">login</button></a>
+         <a href="{% url 'register' %}" class="navbar-tech"><button class="btn btn-primary">sign up</button></a>
+       
+        
+         {% endif %}
+      
+      <a href="https://kattalocalchunks.tk" class="navbar-tech"><button class="btn btn-success">KLC MAIN WEBSITE</button></a>
+    </div>
+  </div><br><br>
+      {% if request.user.is_authenticated %}
+  <br /><br /> <br>
+  <div id="jumbotron" class="jumbotron" style="text-align: center; margin-top:-50px">
+    <h1 class="display-5">Weather</h1>
+    <h5>enter your city name</h5>
+
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpNZhfQZ4B0ntijegDMIlM_OWDCjP5TocqQw&usqp=CAU" class="rounded-circle" style="width:200px; margin-bottom:-50px; ">
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <form method="post" class="col-md"">
+      {% csrf_token %}
+      <div class=" input-group">
+
+      <input type="text" class="form-control" name="city" placeholder="Choose Your City ...">
+      <div class="input-group-btn">
+        <button type="submit" name="but1" class="btn btn-primary">Search</button>
+      </div>
+      </div>
+      <form>
+  </nav>
+  <br> <br>
+  <div class="row">
+    {% if country_code and coordinate and temp and pressure and humidity %}
+    <div class="col d-flex justify-content-center" ">
+      <div class=" card text-white bg-light mb-6">
+      <div class=" card-body">
+        <h4><span class="badge badge-primary">city :</span> {{city}}</h4>
+        <h4><span class="badge badge-primary">Country Code :</span> {{country_code}}</h4>
+        <h4><span class="badge badge-primary">Coordinates [X,Y] :</span> {{coordinate}}</h4>
+        <h4><span class="badge badge-primary">Temperature in Celsius :</span> {{temp}}</h4>
+        <h4><span class="badge badge-primary">Pressure :</span> {{pressure}} </h4>
+        <h4><span class="badge badge-primary">Humidity : </span> {{humidity}}</h4>
+        <h4><span class="badge badge-primary">Forecast : </span> {{main}} <img
+            src="http://openweathermap.org/img/w/{{icon}}.png" alt="Image" style="width:70px"></h4>
+        <h4><span class="badge badge-primary">Description : </span> {{description}}</h4>
+      </div>
+      {% endif %}
+	  
+    </div>
+	</div>
+	<div><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Reviews</h4>
+
+                             {% for x in post %}
+                              
+                              <h5 class="card-subtitle"><img src="{{x.image.url}}" width="20px" height="20px" class="rounded-circle" ><a href="{% url 'get' x.user %}">{{x.user}}</a></h5>
+                              <h5 class="card-subtitle">{{x.remarks}}</h5>
+                   
+                             {% endfor %} 
+                             <nav aria-label="Page navigation example">
+  <ul class="pagination">
+  {% if post.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{post.previous_page_number}}">Previous</a></li>
+    {% endif %}
+     {% comment %} {% for x in post.page_obj%}
+    <li class="page-item"><a class="page-link" href="?page={{x.number}}">{{forloop.counter}}</a></li>
+    {% endfor %} {% endcomment %}
+    <div class="pages">
+       
+        <ul id="ul">
+        {% for pg in page_range %}
+            {% if blogs.number == pg %}
+                <a href="?page={{pg}}" class="btn btn-danger">{{pg}}</a>
+            {% else %}
+                <a href="?page={{pg}}" class="btn btn-primary" id="bu">{{pg}}</a>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+    {% if post.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{post.next_page_number}}">Next</a></li>
+  {% endif %}
+  </ul>
+</nav>
+        
+                            <h5 class="card-subtitle"></h5>
+                            <h2 class="font-medium mt-5 mb-0">Total {{ct}} Reviews</h2>
+                            
+                            <div class="image-box mt-4 mb-4">
+                              {% for x in post %}
+                                <a href="{% url 'get' x.user %}" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Simmons"><img src="{{x.image.url}}" class="rounded-circle" width="50" alt="user"></a>
+                                {% endfor %}
+                                
+                                </div>
+                            <a 
+                            href="{% url 'detail' %}" class="btn btn-lg btn-info waves-effect waves-light">Checkout All Reviews</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-8 border-left">
+                        <div class="card-body">
+                            <ul class="list-style-none">
+                                <li class="mt-4">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-smile-o display-5 text-muted"></i>
+                                        <div class="ml-2">
+                                            <h5 class="mb-0">Positive Reviews</h5>
+                                            <span class="text-muted">{{mindblowing}} Reviews</span></div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 47%" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </li>
+                                <li class="mt-5">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-frown-o display-5 text-muted"></i>
+                                        <div class="ml-2">
+                                            <h5 class="mb-0">Just Ok Reviews</h5>
+                                            <span class="text-muted">{{avarage}} Reviews</span></div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-orange" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </li>
+                                <li class="mt-5 mb-5">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-meh-o display-5 text-muted"></i>
+                                        <div class="ml-2">
+                                            <h5 class="mb-0">Negative  Reviews</h5>
+                                            <span class="text-muted">{{verybad}} Reviews</span></div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   
+  
+</div></div><br>
+<div>
+
+
+</div>
+<h3 style="text-align:center;margin-left:20px;"><span class="badge badge-primary">  PUT YOUR REVIEW ON KLC</span></h3>
+<div class ="col-md-6 col-lg-6">
+  <div  class="container">
+<form action="">
+  
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">OUR PERFORMENCE</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="choice">
+      <option>mind blowing</option>
+      <option>exellent</option>
+      <option>avarage</option>
+      <option>bellow avarage</option>
+      <option>very bad</option>
+      <option>worst</option>
+    </select>
+  </div>
+  <div class="form-group">
+    
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Your Review On KlC</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" name="review" rows="3"></textarea>
+  </div>
+  <button type="submit" name="but2" class="btn btn-primary btn-lg btn-block">SUBMIT</button>
+
+</form>
+{% endif %}
+</div>
+</div><br>
+
+
+
+<!-- First Container -->
+<div class="container-fluid bg-1 text-center">
+  <h3 class="margin" style="text-color:black">Who WE  ARE?</h3>
+  <img src="{% static 'klc.jpg' %}" class="img-responsive img-circle rounded-circle margin" style="display:inline" alt="Bird" width="350" height="350">
+  <h3>WE ARE KATTA LOCAL CHUNKS</h3>
+</div>
+
+<!-- Second Container -->
+<div class="container-fluid bg-2 text-center">
+  <h3 class="margin">What We Are?</h3>
+  <p>We are KLC and we are working our very best to entertain you all,visit our youtube channel to relax by looking on to our funny videos,hope you all would enjoy that, after watching subscribe our youtube channel ,and press the bell icon.
+Entertainment is what makes you happy and feel relaxed. It,s your gateway from day to day life. Entertainment can be anything that gives your pleasure, joy, and enjoyment. While to some people entertainment means watching movies and listening to music, to some people writing or reading a book may be the purest form of pleasure. Whatever you do for your enjoyment, the sole purpose is to have fun and forget tension.</p>
+  
+</div>
+
+<!-- Third Container (Grid) -->
+<div class="container-fluid bg-3 text-center">    
+  <h3 class="margin">Where To Find us?</h3><br>
+  <div class="row">
+    <div class="col-sm-4">
+    <p>OUR YOUTUBE </p>
+  <a href="https://youtu.be/itHwRb3dhbo"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/1280px-Logo_of_YouTube_%282015-2017%29.svg.png" class="img-responsive margin" style="width:100%" alt="Image">
+  </a>  </div>
+    <div class="col-sm-4"> 
+    <P>OUR CHATTING WEBSITE</P>
+      
+      <a href="http://kattachunks.herokuapp.com"> <img src="https://image.freepik.com/free-vector/logo-talk-speak-speech-chat-bubble-icon-logo-sign-vector_8169-144.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+    </a>
+    </div>
+    <div class="col-sm-4"> 
+    <p>OUR BLOOD DONATING WEBSITE</p>
+
+      <a href="http://denniphp3.herokuapp.com"> <img src="https://image.freepik.com/free-vector/3d-world-blood-donor-day-logo-concept_32550-204.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+    </a></div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="container-fluid bg-4 text-center">
+  <p>our covid stutus cheaker <a href="http://denniscvd19.herokuapp.com">http://denniscvd19.herokuapp.com</a></p> 
+<p>&copy dennisbenny</p>
+
+</footer>
+
+</body>
+</html>
+
+
+	
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	
+	<script>
+  $('#bu').click( function() { $('ul#ul li:nth-child(1)').toggle(); } );
+  </script>
+  </body>
+
+</html>
